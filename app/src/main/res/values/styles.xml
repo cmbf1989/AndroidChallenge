@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">#FFFFFF</item>
         <item name="colorAccent">#FFFFFF</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
-
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
 </resources>

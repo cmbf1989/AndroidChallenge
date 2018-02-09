@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static java.lang.System.gc;
 
 public class NewsFeedView extends AppView {
 
@@ -54,6 +55,8 @@ public class NewsFeedView extends AppView {
                 Intent intent = new Intent(getApplicationContext(), DetailsView.class);
                 Article article =  (Article) news_recycledview.getListItemAt(position);
                 intent.putExtra("Article", article);
+               // Intent i = new Intent("com.example.frontkom.androidchallenge.Views.DetailsView");
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
 
             }
@@ -70,7 +73,7 @@ public class NewsFeedView extends AppView {
     {
       //  top_toolbar.getMenu().findItem(R.id.action_refresh).setActionView(new ProgressBar(this));
         controller = (NewsFeedController) factory.createNewsController(this);
-        controller.requestNews("pt");
+        controller.requestNews(app_data.getCountryId());
     }
 
     @Override
@@ -93,7 +96,7 @@ public class NewsFeedView extends AppView {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(new ProgressBar(this));
-                controller.requestNews("us");
+                controller.requestNews(app_data.getCountryId());
                 return true;
 
             case R.id.action_settings:

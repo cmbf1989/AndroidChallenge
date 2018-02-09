@@ -133,8 +133,8 @@ public class Article implements ListViewItem, Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
-        parcel.writeString(this.author);
+        //parcel.writeValue();
+        parcel.writeString(this.source.getName());
         parcel.writeString(this.title);
         parcel.writeString(this.description);
         parcel.writeString(this.url);

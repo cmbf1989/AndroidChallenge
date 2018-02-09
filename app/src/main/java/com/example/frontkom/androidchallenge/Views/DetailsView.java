@@ -1,5 +1,6 @@
 package com.example.frontkom.androidchallenge.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +22,14 @@ import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
 import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
 import com.example.frontkom.androidchallenge.POJO.Article;
+import com.example.frontkom.androidchallenge.POJO.NewsDataFeed;
 import com.example.frontkom.androidchallenge.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.System.gc;
 
 /**
  * Created by Cesar Ferreira on 09/02/2018.
@@ -43,6 +47,32 @@ public class DetailsView extends AppView {
         setContentView(R.layout.activity_news_details);
         top_toolbar = findViewById(R.id.toolbar);
         controller = (NewsFeedController) factory.createNewsController(this);
+
+
+        setSupportActionBar(top_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getDetails();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                Intent intent = new Intent(getApplicationContext(), NewsFeedView.class);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+
+                break;
+        }
+        return true;
+    }
+
+
+    public void getDetails()
+    {
         Bundle data = getIntent().getExtras();
         Article article =  data.getParcelable("Article");
         String title = article.getHeader();
@@ -51,32 +81,20 @@ public class DetailsView extends AppView {
         ((TextView)findViewById(R.id.time_new)).setText(article.getPublishedAt()+ " - " + article.getAuthor());
         ((TextView)findViewById(R.id.description_new)).setText(description);
 
-
         ImageView image_detail = findViewById(R.id.image_new);
+        if (article.getImageSrc() != null) {
+            Picasso.with(this)
+                    .load(article.getImageSrc())
+                    .into(image_detail);
+        }
 
-
-        Picasso.with(this)
-                .load(article.getImageSrc())
-                .into(image_detail);
-       /* LinearLayout description_container  =  findViewById(R.id.description_container);
-        ViewGroup.LayoutParams params = description_container.getLayoutParams();
-        params.width = image_detail.getWidth();
-        description_container.setLayoutParams(params);
-        */
-        setSupportActionBar(top_toolbar);
-
-        getDetails();
-    }
-
-    public void getDetails()
-    {
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_misc, menu);
         return true;
     }
 
@@ -85,23 +103,5 @@ public class DetailsView extends AppView {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_refresh:
-                item.setActionView(new ProgressBar(this));
-                //controller.requestNews("us");
-                return true;
 
-            case R.id.action_settings:
-
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
 }

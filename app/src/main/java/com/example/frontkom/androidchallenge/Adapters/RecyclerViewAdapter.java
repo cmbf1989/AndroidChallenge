@@ -83,11 +83,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.txtHeader.setText(values.get(position).getHeader());
         holder.txtFooter.setText(values.get(position).getFooter());
-        Picasso.with(context)
-                .load(values.get(position).getImageSrc())
-                .resize(170, 170)
-                .centerCrop()
-                .into(holder.image);
+
+        if (values.get(position).getImageSrc() != null) {
+            Picasso.with(context)
+                    .load(values.get(position).getImageSrc())
+                    .resize(80, 80)
+                    .centerCrop()
+                    .into(holder.image);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
