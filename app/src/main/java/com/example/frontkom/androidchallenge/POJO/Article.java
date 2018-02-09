@@ -1,10 +1,16 @@
 
 package com.example.frontkom.androidchallenge.POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Article {
+import java.io.Serializable;
+
+public class Article implements ListViewItem, Parcelable{
 
     @SerializedName("source")
     @Expose
@@ -27,6 +33,27 @@ public class Article {
     @SerializedName("publishedAt")
     @Expose
     private String publishedAt;
+
+    protected Article(Parcel in) {
+        author = in.readString();
+        title = in.readString();
+        description = in.readString();
+        url = in.readString();
+        urlToImage = in.readString();
+        publishedAt = in.readString();
+    }
+
+    public static final Creator<Article> CREATOR = new Creator<Article>() {
+        @Override
+        public Article createFromParcel(Parcel in) {
+            return new Article(in);
+        }
+
+        @Override
+        public Article[] newArray(int size) {
+            return new Article[size];
+        }
+    };
 
     public Source getSource() {
         return source;
@@ -84,4 +111,34 @@ public class Article {
         this.publishedAt = publishedAt;
     }
 
+    @Override
+    public String getHeader() {
+        return title;
+    }
+
+    @Override
+    public String getFooter() {
+        return description;
+    }
+
+    @Override
+    public String getImageSrc() {
+        return urlToImage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(this.author);
+        parcel.writeString(this.title);
+        parcel.writeString(this.description);
+        parcel.writeString(this.url);
+        parcel.writeString(this.urlToImage);
+        parcel.writeString(this.publishedAt);
+    }
 }
