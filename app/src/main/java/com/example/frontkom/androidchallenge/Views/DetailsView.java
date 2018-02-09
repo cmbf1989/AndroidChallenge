@@ -1,10 +1,12 @@
 package com.example.frontkom.androidchallenge.Views;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,11 +50,22 @@ public class DetailsView extends AppView {
         top_toolbar = findViewById(R.id.toolbar);
         controller = (NewsFeedController) factory.createNewsController(this);
 
-
+        Log.i("activity", "details_created");
         setSupportActionBar(top_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getDetails();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -62,8 +75,8 @@ public class DetailsView extends AppView {
 
                 Intent intent = new Intent(getApplicationContext(), NewsFeedView.class);
 
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
+
 
                 break;
         }
@@ -74,20 +87,46 @@ public class DetailsView extends AppView {
     public void getDetails()
     {
         Bundle data = getIntent().getExtras();
-        Article article =  data.getParcelable("Article");
+        final Article article =  data.getParcelable("Article");
         String title = article.getHeader();
-        String description = article.getFooter();
-        ((TextView)findViewById(R.id.title_new)).setText(title);
+        String description = article.getDescription();
+Log.i("title", title);
+        Log.i("description", description);
+
+        TextView title_textview = ((TextView)findViewById(R.id.title_new));
+        ImageView image_detail = findViewById(R.id.image_new);
+
         ((TextView)findViewById(R.id.time_new)).setText(article.getPublishedAt()+ " - " + article.getAuthor());
         ((TextView)findViewById(R.id.description_new)).setText(description);
 
-        ImageView image_detail = findViewById(R.id.image_new);
+        title_textview.setText(title);
+        title_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (article.getUrl() != null) {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(article.getUrl()));
+                    startActivity(i);
+                }
+            }
+        });
+
+        image_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (article.getUrl() != null) {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(article.getUrl()));
+                    startActivity(i);
+                }
+            }
+        });
+
         if (article.getImageSrc() != null) {
             Picasso.with(this)
                     .load(article.getImageSrc())
                     .into(image_detail);
         }
-
 
     }
 

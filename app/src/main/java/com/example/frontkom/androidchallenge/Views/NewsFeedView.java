@@ -52,11 +52,12 @@ public class NewsFeedView extends AppView {
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerView, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Log.i("test", String.valueOf(position));
                 Intent intent = new Intent(getApplicationContext(), DetailsView.class);
                 Article article =  (Article) news_recycledview.getListItemAt(position);
                 intent.putExtra("Article", article);
                // Intent i = new Intent("com.example.frontkom.androidchallenge.Views.DetailsView");
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
 
             }

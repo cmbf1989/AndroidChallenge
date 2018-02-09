@@ -118,7 +118,7 @@ public class Article implements ListViewItem, Parcelable{
 
     @Override
     public String getFooter() {
-        return description;
+        return publishedAt;
     }
 
     @Override
