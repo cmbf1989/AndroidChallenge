@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+    android:background="@drawable/news_item_layout"
+    android:padding="6dip">
 
     <ImageView
         android:id="@+id/icon"
@@ -22,9 +23,9 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/icon"
         android:ellipsize="marquee"
+        android:singleLine="true"
         android:text="Description"
-        android:textSize="12sp"
-        android:singleLine="true" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/firstLine"
