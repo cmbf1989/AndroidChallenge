@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -89,6 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .load(values.get(position).getImageSrc())
                     .resize(80, 80)
                     .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .into(holder.image);
         }
     }

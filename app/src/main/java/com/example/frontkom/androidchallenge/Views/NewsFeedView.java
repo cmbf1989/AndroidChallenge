@@ -1,32 +1,31 @@
 package com.example.frontkom.androidchallenge.Views;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
 import com.example.frontkom.androidchallenge.POJO.Article;
+import com.example.frontkom.androidchallenge.POJO.ConfigSettings;
 import com.example.frontkom.androidchallenge.R;
+import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static java.lang.System.gc;
 
 public class NewsFeedView extends AppView {
 
@@ -52,14 +51,14 @@ public class NewsFeedView extends AppView {
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerView, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Log.i("test", String.valueOf(position));
+
                 Intent intent = new Intent(getApplicationContext(), DetailsView.class);
                 Article article =  (Article) news_recycledview.getListItemAt(position);
                 intent.putExtra("Article", article);
                // Intent i = new Intent("com.example.frontkom.androidchallenge.Views.DetailsView");
-               // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
-
+                finish();
             }
 
             @Override
@@ -69,7 +68,14 @@ public class NewsFeedView extends AppView {
         }));
         requestNews();
     }
+    @Override
+    protected void onDestroy() {
+        //android.os.Process.killProcess(android.os.Process.myPid());
 
+        super.onDestroy();
+        //Picasso.with(this).shutdown();
+
+    }
     public void requestNews()
     {
       //  top_toolbar.getMenu().findItem(R.id.action_refresh).setActionView(new ProgressBar(this));
@@ -101,7 +107,7 @@ public class NewsFeedView extends AppView {
                 return true;
 
             case R.id.action_settings:
-
+                createSettingsPopup();
                 return true;
 
             default:
@@ -110,5 +116,31 @@ public class NewsFeedView extends AppView {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public void createSettingsPopup() {
+        /*String config_settings = FileReaderJSON.getJSON(this, R.raw.datasource);
+        Gson converter =  new Gson();
+        ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
+
+        String tteste = " true";
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, settings.getCountries());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        Spinner _EmpSpinner =  null;
+        _EmpSpinner = findViewById(R.id.);
+        _EmpSpinner.setAdapter(dataAdapter);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+
+
+        builder.setMessage("Choose settings").setTitle("Settings");
+
+        AlertDialog dialog = builder.create();
+        */
+
+
     }
 }

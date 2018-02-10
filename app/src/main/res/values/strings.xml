@@ -7,4 +7,5 @@
     <string name="todo">TODO</string>
     <string name="description_item">Description</string>
     <string name="example_application">Example application</string>
+    <string name="countries">Country</string>
 </resources>

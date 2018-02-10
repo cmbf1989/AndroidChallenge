@@ -26,6 +26,7 @@ import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener
 import com.example.frontkom.androidchallenge.POJO.Article;
 import com.example.frontkom.androidchallenge.POJO.NewsDataFeed;
 import com.example.frontkom.androidchallenge.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -74,8 +75,9 @@ public class DetailsView extends AppView {
             case android.R.id.home:
 
                 Intent intent = new Intent(getApplicationContext(), NewsFeedView.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
+                finish();
 
 
                 break;
@@ -90,8 +92,7 @@ public class DetailsView extends AppView {
         final Article article =  data.getParcelable("Article");
         String title = article.getHeader();
         String description = article.getDescription();
-Log.i("title", title);
-        Log.i("description", description);
+
 
         TextView title_textview = ((TextView)findViewById(R.id.title_new));
         ImageView image_detail = findViewById(R.id.image_new);
@@ -125,6 +126,7 @@ Log.i("title", title);
         if (article.getImageSrc() != null) {
             Picasso.with(this)
                     .load(article.getImageSrc())
+                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .into(image_detail);
         }
 
@@ -142,5 +144,12 @@ Log.i("title", title);
 
     }
 
+    @Override
+    protected void onDestroy() {
+        //android.os.Process.killProcess(android.os.Process.myPid());
 
+        super.onDestroy();
+        //Picasso.with(this).shutdown();
+
+    }
 }

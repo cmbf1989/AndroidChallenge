@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <MultiSelectListPreference
-        android:defaultValue="@array/country"
-        android:entries="@array/country"
-        android:entryValues="@array/country"
+        android:defaultValue="@array/countries"
+        android:entries="@array/countries"
+        android:entryValues="@array/countries"
         android:key="multi_select_list_preference_1"
         android:title="Multi select list preference" />
 </PreferenceScreen>

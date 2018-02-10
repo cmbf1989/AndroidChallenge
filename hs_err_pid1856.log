@@ -340,7 +340,7 @@ Dynamic libraries:
 0x00007ff981130000 - 0x00007ff981141000 	C:\Windows\system32\MSASN1.dll
 
 VM Arguments:
-jvm_args: -Xmx1536m -Dfile.encoding=windows-1252 -Duser.country=PT -Duser.language=pt -Duser.variant 
+jvm_args: -Xmx1536m -Dfile.encoding=windows-1252 -Duser.countries=PT -Duser.language=pt -Duser.variant
 java_command: org.gradle.launcher.daemon.bootstrap.GradleDaemon 4.1
 java_class_path (initial): C:\Program Files\Android\Android Studio\gradle\gradle-4.1\lib\gradle-launcher-4.1.jar
 Launcher Type: SUN_STANDARD
