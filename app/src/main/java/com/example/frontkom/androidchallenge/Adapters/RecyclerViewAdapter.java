@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.frontkom.androidchallenge.Helpers.TimeConverter;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.R;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<ListViewItem> values;
@@ -83,7 +85,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // - replace the contents of the view with that element
 
         holder.txtHeader.setText(values.get(position).getHeader());
-        holder.txtFooter.setText(values.get(position).getFooter());
+
+        String time = values.get(position).getFooter();
+
+        String time_past = TimeConverter.getElapsedTimeMinutesSecondsString(time);
+        holder.txtFooter.setText(time_past);
 
         if (values.get(position).getImageSrc() != null) {
             Picasso.with(context)

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
 import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Helpers.TimeConverter;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
 import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
@@ -97,7 +98,10 @@ public class DetailsView extends AppView {
         TextView title_textview = ((TextView)findViewById(R.id.title_new));
         ImageView image_detail = findViewById(R.id.image_new);
 
-        ((TextView)findViewById(R.id.time_new)).setText(article.getPublishedAt()+ " - " + article.getAuthor());
+        String time = "";
+        if (article.getPublishedAt() != null)
+            time = TimeConverter.convertTimeDate(article.getPublishedAt());
+        ((TextView)findViewById(R.id.time_new)).setText(time);
         ((TextView)findViewById(R.id.description_new)).setText(description);
 
         title_textview.setText(title);
