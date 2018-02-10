@@ -14,6 +14,7 @@ import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
 import com.example.frontkom.androidchallenge.DataSource.DataSource;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
+import com.example.frontkom.androidchallenge.POJO.Country;
 import com.example.frontkom.androidchallenge.R;
 import com.example.frontkom.androidchallenge.Views.AppView;
 
@@ -35,7 +36,7 @@ public class SettingsDialogView extends Dialog {
         setContentView(R.layout.settings_dialog);
     }
 
-    public SettingsDialogView(AppView activity, List<String> countries)
+    public SettingsDialogView(AppView activity, List<Country> countries)
     {
         super(activity);
         view = activity;
@@ -45,13 +46,13 @@ public class SettingsDialogView extends Dialog {
         fillSettingsData(countries);
     }
 
-    public void fillSettingsData(List<String> countries)
+    public void fillSettingsData(List<Country> countries)
     {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(view, android.R.layout.simple_spinner_item, countries);
+        ArrayAdapter<Country> dataAdapter = new ArrayAdapter<>(view, android.R.layout.simple_spinner_item, countries);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner _EmpSpinner =  null;
-        _EmpSpinner = findViewById(R.id.list_countries);
+        Spinner _EmpSpinner = findViewById(R.id.list_countries);
         _EmpSpinner.setAdapter(dataAdapter);
+
     }
 
     public void showDialog() {
@@ -61,7 +62,7 @@ public class SettingsDialogView extends Dialog {
             @Override
             public void onClick(View v) {
 
-                String country = ((Spinner)findViewById(R.id.list_countries)).getSelectedItem().toString();
+                String country = ((Country)((Spinner)findViewById(R.id.list_countries)).getSelectedItem()).getId();
                 ((NewsFeedController) view.getController()).setCountry(country);
                 ((NewsFeedController) view.getController()).requestNews();
 

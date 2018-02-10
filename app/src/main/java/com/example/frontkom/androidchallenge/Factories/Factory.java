@@ -9,6 +9,7 @@ import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 import com.example.frontkom.androidchallenge.Models.AppModel;
 import com.example.frontkom.androidchallenge.Models.NewsModel;
+import com.example.frontkom.androidchallenge.POJO.Country;
 import com.example.frontkom.androidchallenge.Views.AppView;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class Factory {
         return new NewsFeedController(view);
     }
 
-    public SettingsDialogView createSettingsDialog(AppView activity, List<String> countries)
+    public SettingsDialogView createSettingsDialog(AppView activity, List<Country> countries)
     {
         return new SettingsDialogView(activity, countries);
     }

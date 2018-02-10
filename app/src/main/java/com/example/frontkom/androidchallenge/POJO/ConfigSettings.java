@@ -20,7 +20,7 @@ public class ConfigSettings {
     private List<String> language = null;
     @SerializedName("countries")
     @Expose
-    private List<String> countries = null;
+    private List<Country> countries = null;
 
     public List<String> getCategory() {
         return category;
@@ -38,11 +38,11 @@ public class ConfigSettings {
         this.language = language;
     }
 
-    public List<String> getCountries() {
+    public List<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<String> countries) {
+    public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 
