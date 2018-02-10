@@ -24,4 +24,8 @@ public class DataSource {
     public String getCountryId() {
         return this.country_id;
     }
+
+    public void setCountryId(String country_id) {
+        this.country_id = country_id;
+    }
 }

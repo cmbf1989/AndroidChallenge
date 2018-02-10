@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
+import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
@@ -42,8 +43,8 @@ public class DetailsView extends AppView {
 
 
     NewsFeedController controller = null;
-
     Toolbar top_toolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,6 @@ public class DetailsView extends AppView {
         top_toolbar = findViewById(R.id.toolbar);
         controller = (NewsFeedController) factory.createNewsController(this);
 
-        Log.i("activity", "details_created");
         setSupportActionBar(top_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -151,5 +151,11 @@ public class DetailsView extends AppView {
         super.onDestroy();
         //Picasso.with(this).shutdown();
 
+    }
+
+
+    @Override
+    public AppController getController() {
+        return controller;
     }
 }

@@ -34,11 +34,10 @@ public class NewsModel extends AppModel{
         super();
     }
 
-    public void requestNews(String country)
+    public void requestNews()
     {
+        String country = datasource.getCountryId();
         NewsConnection news_connection = ServiceGenerator.createService(NewsConnection.class, null, null);
-
-
 
         Call<NewsDataFeed> call =   news_connection.getNews(country, "e9f236f020e5427aa5f6b1ff104e955e");
         call.enqueue(new Callback<NewsDataFeed>() {
@@ -64,5 +63,11 @@ public class NewsModel extends AppModel{
     public List<ListViewItem> getNews()
     {
         return (List<ListViewItem>)(List<?>) articles;
+    }
+
+
+    public void setCountryId(String country)
+    {
+        datasource.setCountryId(country);
     }
 }

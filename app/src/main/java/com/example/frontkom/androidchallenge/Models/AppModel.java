@@ -1,5 +1,6 @@
 package com.example.frontkom.androidchallenge.Models;
 
+import com.example.frontkom.androidchallenge.DataSource.DataSource;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 public abstract class AppModel {
 
     List<IObserver> observers;
+    protected DataSource datasource = DataSource.getInstance();
 
     public AppModel() {
         this.observers = new ArrayList<>();

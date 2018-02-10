@@ -2,6 +2,7 @@ package com.example.frontkom.androidchallenge.Views;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.DataSource.DataSource;
 import com.example.frontkom.androidchallenge.Factories.Factory;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
@@ -12,5 +13,5 @@ import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 
 public abstract class AppView  extends AppCompatActivity implements IObserver {
     protected Factory factory = Factory.getInstance();
-    protected DataSource app_data = DataSource.getInstance();
+    public abstract AppController getController();
 }

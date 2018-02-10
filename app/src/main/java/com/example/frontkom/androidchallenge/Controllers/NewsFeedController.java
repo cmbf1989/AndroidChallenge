@@ -2,6 +2,7 @@ package com.example.frontkom.androidchallenge.Controllers;
 
 import android.content.Context;
 
+import com.example.frontkom.androidchallenge.DataSource.DataSource;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
 import com.example.frontkom.androidchallenge.Models.NewsModel;
 import com.example.frontkom.androidchallenge.Views.AppView;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class NewsFeedController extends AppController {
 
-    String language = "pt";
+
 
     public NewsFeedController(AppView view)
     {
@@ -22,18 +23,17 @@ public class NewsFeedController extends AppController {
         this.model = factory.createNewsModel(view);
     }
 
-    public void setLanguage(String lang)
+    public void requestNews()
     {
-        this.language = lang;
-    }
-
-    public void requestNews(String country)
-    {
-        ((NewsModel) this.model).requestNews(country);
+        ((NewsModel) this.model).requestNews();
     }
 
     public List<ListViewItem> getNews()
     {
         return ((NewsModel) this.model).getNews();
+    }
+
+    public void setCountry(String country) {
+        ((NewsModel) this.model).setCountryId(country);
     }
 }

@@ -14,7 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
+import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
 import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
 import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
@@ -80,7 +82,7 @@ public class NewsFeedView extends AppView {
     {
       //  top_toolbar.getMenu().findItem(R.id.action_refresh).setActionView(new ProgressBar(this));
         controller = (NewsFeedController) factory.createNewsController(this);
-        controller.requestNews(app_data.getCountryId());
+        controller.requestNews();
     }
 
     @Override
@@ -103,7 +105,7 @@ public class NewsFeedView extends AppView {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(new ProgressBar(this));
-                controller.requestNews(app_data.getCountryId());
+                controller.requestNews();
                 return true;
 
             case R.id.action_settings:
@@ -119,28 +121,19 @@ public class NewsFeedView extends AppView {
     }
 
     public void createSettingsPopup() {
-        /*String config_settings = FileReaderJSON.getJSON(this, R.raw.datasource);
+
+        String config_settings = FileReaderJSON.getJSON(this, R.raw.datasource);
         Gson converter =  new Gson();
         ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
 
-        String tteste = " true";
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, settings.getCountries());
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SettingsDialogView dialog = factory.createSettingsDialog(this, settings.getCountries() );
+        dialog.showDialog();
 
 
-        Spinner _EmpSpinner =  null;
-        _EmpSpinner = findViewById(R.id.);
-        _EmpSpinner.setAdapter(dataAdapter);
+    }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-
-
-        builder.setMessage("Choose settings").setTitle("Settings");
-
-        AlertDialog dialog = builder.create();
-        */
-
-
+    @Override
+    public AppController getController() {
+        return controller;
     }
 }

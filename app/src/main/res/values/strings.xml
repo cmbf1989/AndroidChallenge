@@ -8,4 +8,6 @@
     <string name="description_item">Description</string>
     <string name="example_application">Example application</string>
     <string name="countries">Country</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>
