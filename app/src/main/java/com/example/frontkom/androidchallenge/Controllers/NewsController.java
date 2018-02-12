@@ -1,23 +1,27 @@
 package com.example.frontkom.androidchallenge.Controllers;
 
+import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
 import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Models.NewsModel;
+import com.example.frontkom.androidchallenge.POJO.ConfigSettings;
 import com.example.frontkom.androidchallenge.Views.AppView;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
  * Created by Cesar Ferreira on 07/02/2018.
  */
 
-public class NewsFeedController extends AppController {
+public class NewsController extends AppController {
 
 
+    NewsModel model = null;
 
-    public NewsFeedController(AppView view)
+    public NewsController(AppView view)
     {
         super(view);
-        this.model = factory.createNewsModel(view);
+        this.model =  (NewsModel) factory.createNewsModel(view);
     }
 
     /**
@@ -25,7 +29,7 @@ public class NewsFeedController extends AppController {
      */
     public void requestNews()
     {
-        ((NewsModel) this.model).requestNews();
+        model.requestNews();
     }
 
     /**
@@ -33,13 +37,21 @@ public class NewsFeedController extends AppController {
      */
     public List<IListViewItem> getNews()
     {
-        return ((NewsModel) this.model).getNews();
+        return model.getNews();
     }
 
     /**
      *  Sets the country id to search the news
      */
-    public void setCountry(String country) {
-        ((NewsModel) this.model).setCountryId(country);
+    public void setCountry(String id, String name) {
+        this.model.setCountryId(id, name);
+    }
+
+    public String getCountry() {
+        return this.model.getCountry();
+    }
+
+    public ConfigSettings getSettings(InputStream is) {
+        return model.getSettings(is);
     }
 }

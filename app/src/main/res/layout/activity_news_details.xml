@@ -100,7 +100,7 @@
                         android:layout_height="130dp"
                         android:background="#000000"
                         android:contentDescription="@string/image_new"
-                        app:srcCompat="@drawable/ic_no_image" />
+                        app:srcCompat="@mipmap/ic_no_image_foreground" />
                 </LinearLayout>
 
                 <LinearLayout

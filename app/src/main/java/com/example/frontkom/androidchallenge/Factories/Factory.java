@@ -1,10 +1,7 @@
 package com.example.frontkom.androidchallenge.Factories;
 
-import android.app.Activity;
-import android.content.Context;
-
 import com.example.frontkom.androidchallenge.Controllers.AppController;
-import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Controllers.NewsController;
 import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 import com.example.frontkom.androidchallenge.Models.AppModel;
@@ -40,7 +37,7 @@ public class Factory {
 
     public AppController createNewsController(AppView view)
     {
-        return new NewsFeedController(view);
+        return new NewsController(view);
     }
 
     public SettingsDialogView createSettingsDialog(AppView activity, List<Country> countries)

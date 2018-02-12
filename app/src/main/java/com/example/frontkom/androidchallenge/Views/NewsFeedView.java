@@ -9,15 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
 import com.example.frontkom.androidchallenge.Controllers.AppController;
-import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Controllers.NewsController;
 import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
-import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
 import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
@@ -25,14 +24,14 @@ import com.example.frontkom.androidchallenge.POJO.Article;
 import com.example.frontkom.androidchallenge.POJO.ConfigSettings;
 import com.example.frontkom.androidchallenge.POJO.Country;
 import com.example.frontkom.androidchallenge.R;
-import com.google.gson.Gson;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFeedView extends AppView {
 
-    NewsFeedController controller = null;
+    NewsController controller = null;
     RecyclerViewAdapter news_recycledview = null;
     Toolbar top_toolbar = null;
     SettingsDialogView settings_dialog = null;
@@ -40,9 +39,11 @@ public class NewsFeedView extends AppView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        controller = (NewsController) factory.createNewsController(this);
         setContentView(R.layout.activity_news_feed_view);
         top_toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(top_toolbar);
+        ((TextView)findViewById(R.id.country_label)).setText( controller.getCountry());
 
         RecyclerView recyclerView =  findViewById(R.id.news_list);
         recyclerView.setHasFixedSize(true);
@@ -88,7 +89,6 @@ public class NewsFeedView extends AppView {
     public void requestNews()
     {
         setProgessLoading(R.id.progress_search, View.VISIBLE);
-        controller = (NewsFeedController) factory.createNewsController(this);
         controller.requestNews();
     }
 
@@ -152,10 +152,8 @@ public class NewsFeedView extends AppView {
      */
     public void createSettingsPopup() {
 
-        String config_settings = FileReaderJSON.getJSON(this, R.raw.datasource);
-        Gson converter =  new Gson();
-        ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
-
+        InputStream is = getResources().openRawResource(R.raw.datasource);
+        ConfigSettings settings = controller.getSettings(is);
         settings_dialog = factory.createSettingsDialog(this, settings.getCountries() );
         handleSettingsPopup();
     }
@@ -171,11 +169,13 @@ public class NewsFeedView extends AppView {
             @Override
             public void onClick(View v) {
 
-                String country = ((Country)((Spinner) settings_dialog.findViewById(R.id.list_countries)).getSelectedItem()).getId();
+                String id = ((Country)((Spinner) settings_dialog.findViewById(R.id.list_countries)).getSelectedItem()).getId();
+                String name = ((Country)((Spinner) settings_dialog.findViewById(R.id.list_countries)).getSelectedItem()).getName();
                 setProgessLoading(R.id.news_list, View.GONE);
                 setProgessLoading(R.id.progress_search, View.VISIBLE);
-                controller.setCountry(country);
+                controller.setCountry(id, name);
                 controller.requestNews();
+                ((TextView)findViewById(R.id.country_label)).setText(name);
                 settings_dialog.dismiss();
                 settings_dialog = null;
             }

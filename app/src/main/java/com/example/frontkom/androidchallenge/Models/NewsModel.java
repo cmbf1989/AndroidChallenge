@@ -2,13 +2,20 @@ package com.example.frontkom.androidchallenge.Models;
 
 import android.util.Log;
 
+import com.example.frontkom.androidchallenge.DataSource.DataSource;
+import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
+import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.NewsConnection;
 import com.example.frontkom.androidchallenge.Network.ServiceGenerator;
 import com.example.frontkom.androidchallenge.POJO.Article;
+import com.example.frontkom.androidchallenge.POJO.ConfigSettings;
 import com.example.frontkom.androidchallenge.POJO.NewsDataFeed;
+import com.example.frontkom.androidchallenge.R;
+import com.google.gson.Gson;
 
+import java.io.InputStream;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,8 +76,22 @@ public class NewsModel extends AppModel{
     }
 
 
-    public void setCountryId(String country)
+    public void setCountryId(String id, String name)
     {
-        datasource.setCountryId(country);
+        datasource.setCountryId(id);
+        datasource.setCountryName(name);
+    }
+
+    public String getCountry() {
+        return  DataSource.getInstance().getCountryName();
+    }
+
+    public ConfigSettings getSettings(InputStream is) {
+
+        String config_settings = FileReaderJSON.getJSON(is, R.raw.datasource);
+        Gson converter =  new Gson();
+        ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
+
+        return  settings;
     }
 }

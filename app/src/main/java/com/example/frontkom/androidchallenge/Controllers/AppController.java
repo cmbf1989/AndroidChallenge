@@ -14,17 +14,13 @@ import java.util.ArrayList;
 
 public abstract class AppController {
 
-    protected AppModel model;
     protected AppView view;
     protected Factory  factory = Factory.getInstance();
 
     public AppController(AppView view) {
         this.view = view;
     }
-    public  void attachModel(AppModel model)
-    {
-        this.model = model;
-    }
+
 
     public  void attachView(AppView view)
     {

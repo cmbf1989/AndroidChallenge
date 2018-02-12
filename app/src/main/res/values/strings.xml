@@ -10,4 +10,6 @@
     <string name="countries">Country</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="loading">Loading...</string>
+    <string name="country">Portugal</string>
 </resources>

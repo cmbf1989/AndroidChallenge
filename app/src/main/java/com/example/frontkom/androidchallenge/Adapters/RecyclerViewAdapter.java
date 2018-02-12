@@ -7,6 +7,7 @@ package com.example.frontkom.androidchallenge.Adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.R;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.GRAY;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -91,13 +95,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String time_past = TimeConverter.getElapsedTimeMinutesSecondsString(time);
         holder.txtFooter.setText(time_past);
 
-        if (values.get(position).getImageSrc() != null) {
+        if (values.get(position).getImageSrc() != null ) {
+            holder.image.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(values.get(position).getImageSrc())
                     .resize(80, 80)
                     .centerCrop()
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .into(holder.image);
+        } else {
+            holder.image.setVisibility(View.GONE);
         }
     }
 

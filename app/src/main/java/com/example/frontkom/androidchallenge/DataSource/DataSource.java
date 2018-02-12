@@ -10,6 +10,8 @@ public class DataSource {
 
     private static DataSource mInstance = null;
     private String country_id = "pt";
+    private String country_name = "Portugal";
+
     public DataSource() {
 
     }
@@ -27,5 +29,14 @@ public class DataSource {
 
     public void setCountryId(String country_id) {
         this.country_id = country_id;
+    }
+
+    public void setCountryName(String name)
+    {
+        country_name = name;
+    }
+
+    public String getCountryName() {
+        return country_name;
     }
 }

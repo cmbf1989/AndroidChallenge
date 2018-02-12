@@ -19,9 +19,9 @@ import java.io.Writer;
 
 public class FileReaderJSON {
 
-    public static String getJSON(Context context, int id)
+    public static String getJSON(InputStream is, int id)
     {
-        InputStream is = context.getResources().openRawResource(id);
+        //InputStream is = context.getResources().openRawResource(id);
         Writer writer = new StringWriter();
 
         try {

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.frontkom.androidchallenge.Controllers.AppController;
-import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
+import com.example.frontkom.androidchallenge.Controllers.NewsController;
 import com.example.frontkom.androidchallenge.Helpers.TimeConverter;
 import com.example.frontkom.androidchallenge.POJO.Article;
 import com.example.frontkom.androidchallenge.R;
@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 public class DetailsView extends AppView {
 
 
-    NewsFeedController controller = null;
+    NewsController controller = null;
     Toolbar top_toolbar = null;
 
     @Override
@@ -33,8 +33,7 @@ public class DetailsView extends AppView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
         top_toolbar = findViewById(R.id.toolbar);
-        controller = (NewsFeedController) factory.createNewsController(this);
-
+        controller = (NewsController) factory.createNewsController(this);
         setSupportActionBar(top_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -85,22 +84,17 @@ public class DetailsView extends AppView {
         String time = "";
         if (article.getPublishedAt() != null)
             time = TimeConverter.convertTimeDate(article.getPublishedAt());
+
+        if (description != null && !description.isEmpty()) {
+            ((TextView)findViewById(R.id.description_new)).setText(description);
+        } else {
+            findViewById(R.id.description_container).setVisibility(View.GONE);
+        }
         ((TextView)findViewById(R.id.time_new)).setText(time);
-        ((TextView)findViewById(R.id.description_new)).setText(description);
+
 
         title_textview.setText(title);
         title_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (article.getUrl() != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(article.getUrl()));
-                    startActivity(i);
-                }
-            }
-        });
-
-        image_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (article.getUrl() != null) {
@@ -116,6 +110,19 @@ public class DetailsView extends AppView {
                     .load(article.getImageSrc())
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .into(image_detail);
+
+            image_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (article.getUrl() != null) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(article.getUrl()));
+                        startActivity(i);
+                    }
+                }
+            });
+        } else {
+            findViewById(R.id.image_container).setVisibility(View.GONE);
         }
 
     }
