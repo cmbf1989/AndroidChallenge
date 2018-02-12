@@ -3,7 +3,7 @@ package com.example.frontkom.androidchallenge.Models;
 import android.util.Log;
 
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
+import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.NewsConnection;
 import com.example.frontkom.androidchallenge.Network.ServiceGenerator;
 import com.example.frontkom.androidchallenge.POJO.Article;
@@ -34,12 +34,15 @@ public class NewsModel extends AppModel{
         super();
     }
 
+    /**
+     * Makes http request using retrofit. creates async thread to notify the view when done
+     */
     public void requestNews()
     {
         String country = datasource.getCountryId();
         NewsConnection news_connection = ServiceGenerator.createService(NewsConnection.class, null, null);
 
-        Call<NewsDataFeed> call =   news_connection.getNews(country, "e9f236f020e5427aa5f6b1ff104e955e");
+        Call<NewsDataFeed> call =   news_connection.getNews(country, ServiceGenerator.getApiKey());
         call.enqueue(new Callback<NewsDataFeed>() {
             @Override
             public void onResponse(Call<NewsDataFeed> call, Response<NewsDataFeed> response) {
@@ -55,14 +58,14 @@ public class NewsModel extends AppModel{
             @Override
             public void onFailure(Call<NewsDataFeed> call, Throwable t) {
                 // something went completely south (like no internet connection)
-                Log.d("APIREQUEST", t.getMessage());
+
             }
         });
     }
 
-    public List<ListViewItem> getNews()
+    public List<IListViewItem> getNews()
     {
-        return (List<ListViewItem>)(List<?>) articles;
+        return (List<IListViewItem>)(List<?>) articles;
     }
 
 

@@ -19,6 +19,7 @@ package com.example.frontkom.androidchallenge.Network;
 public class ServiceGenerator {
 
     public static final String API_BASE_URL = "https://newsapi.org";
+    private static final String api_key = "e9f236f020e5427aa5f6b1ff104e955e";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -56,6 +57,11 @@ public class ServiceGenerator {
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
+    }
+
+    public static String getApiKey()
+    {
+        return api_key;
     }
 
 

@@ -3,38 +3,20 @@ package com.example.frontkom.androidchallenge.Views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.frontkom.androidchallenge.Adapters.RecyclerViewAdapter;
 import com.example.frontkom.androidchallenge.Controllers.AppController;
 import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
 import com.example.frontkom.androidchallenge.Helpers.TimeConverter;
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
-import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
-import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
 import com.example.frontkom.androidchallenge.POJO.Article;
-import com.example.frontkom.androidchallenge.POJO.NewsDataFeed;
 import com.example.frontkom.androidchallenge.R;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.System.gc;
 
 /**
  * Created by Cesar Ferreira on 09/02/2018.
@@ -86,7 +68,9 @@ public class DetailsView extends AppView {
         return true;
     }
 
-
+    /**
+     * Sets up all the view data based on Article object selected on previous activity
+     */
     public void getDetails()
     {
         Bundle data = getIntent().getExtras();

@@ -1,9 +1,6 @@
 package com.example.frontkom.androidchallenge.Controllers;
 
-import android.content.Context;
-
-import com.example.frontkom.androidchallenge.DataSource.DataSource;
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
+import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Models.NewsModel;
 import com.example.frontkom.androidchallenge.Views.AppView;
 
@@ -23,16 +20,25 @@ public class NewsFeedController extends AppController {
         this.model = factory.createNewsModel(view);
     }
 
+    /**
+     *  This method requests news to the model to make an http request to get the news (JSON)
+     */
     public void requestNews()
     {
         ((NewsModel) this.model).requestNews();
     }
 
-    public List<ListViewItem> getNews()
+    /**
+     *  This method gets the news from memory and returns it in a list
+     */
+    public List<IListViewItem> getNews()
     {
         return ((NewsModel) this.model).getNews();
     }
 
+    /**
+     *  Sets the country id to search the news
+     */
     public void setCountry(String country) {
         ((NewsModel) this.model).setCountryId(country);
     }

@@ -4,13 +4,11 @@ package com.example.frontkom.androidchallenge.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
+import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Article implements ListViewItem, Parcelable{
+public class Article implements IListViewItem, Parcelable{
 
     @SerializedName("source")
     @Expose

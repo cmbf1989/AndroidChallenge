@@ -1,6 +1,5 @@
 package com.example.frontkom.androidchallenge.Views;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
@@ -19,10 +19,11 @@ import com.example.frontkom.androidchallenge.Controllers.NewsFeedController;
 import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
 import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
 import com.example.frontkom.androidchallenge.Interfaces.RecyclerViewClickListener;
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
+import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Listeners.RecyclerViewTouchListener;
 import com.example.frontkom.androidchallenge.POJO.Article;
 import com.example.frontkom.androidchallenge.POJO.ConfigSettings;
+import com.example.frontkom.androidchallenge.POJO.Country;
 import com.example.frontkom.androidchallenge.R;
 import com.google.gson.Gson;
 
@@ -34,6 +35,8 @@ public class NewsFeedView extends AppView {
     NewsFeedController controller = null;
     RecyclerViewAdapter news_recycledview = null;
     Toolbar top_toolbar = null;
+    SettingsDialogView settings_dialog = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,7 @@ public class NewsFeedView extends AppView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<ListViewItem> input = new ArrayList<>();
+        List<IListViewItem> input = new ArrayList<>();
         news_recycledview = new RecyclerViewAdapter(input,this);
         recyclerView.setAdapter(news_recycledview);
 
@@ -78,11 +81,20 @@ public class NewsFeedView extends AppView {
         //Picasso.with(this).shutdown();
 
     }
+
+    /**
+     * Requests to the controller the news. Sets progress search visible
+     */
     public void requestNews()
     {
-      //  top_toolbar.getMenu().findItem(R.id.action_refresh).setActionView(new ProgressBar(this));
+        setProgessLoading(R.id.progress_search, View.VISIBLE);
         controller = (NewsFeedController) factory.createNewsController(this);
         controller.requestNews();
+    }
+
+    public void setProgessLoading(int item, int id)
+    {
+        (findViewById(item)).setVisibility(id);
     }
 
     @Override
@@ -93,14 +105,25 @@ public class NewsFeedView extends AppView {
     }
 
     @Override
+    /**
+     * IObserver composition method that updates the content.
+     */
     public void update() {
-        List<ListViewItem> items = this.controller.getNews();
+        List<IListViewItem> items = this.controller.getNews();
         news_recycledview.addNewList(items);
+        setProgessLoading(R.id.progress_search, View.GONE);
+        setProgessLoading(R.id.news_list, View.VISIBLE);
         news_recycledview.notifyDataSetChanged();
         (top_toolbar.getMenu().findItem(R.id.action_refresh)).setActionView(null);
     }
 
     @Override
+    /**
+     * Actions for tab bar:
+     *  -  refresh : tries to request the news again.
+     *  - settings : opens custom dialog for the selection of the language codes for the news
+     *
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
@@ -120,18 +143,54 @@ public class NewsFeedView extends AppView {
         }
     }
 
+
+
+
+    /**
+     * Method that creates the custom popup. Retrieves data from Raw/datasource.json and loads to a class object
+     * After loading shows in the popup the languages available pointing to their code
+     */
     public void createSettingsPopup() {
 
         String config_settings = FileReaderJSON.getJSON(this, R.raw.datasource);
         Gson converter =  new Gson();
         ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
 
-        SettingsDialogView dialog = factory.createSettingsDialog(this, settings.getCountries() );
-        dialog.showDialog();
-
-
+        settings_dialog = factory.createSettingsDialog(this, settings.getCountries() );
+        handleSettingsPopup();
     }
 
+    /**
+     * Handles button clicks on popup settings.
+     */
+    public void handleSettingsPopup()
+    {
+        //final View view  = settings_dialog.f;
+        Button save_btn = settings_dialog.findViewById(R.id.save_settings);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String country = ((Country)((Spinner) settings_dialog.findViewById(R.id.list_countries)).getSelectedItem()).getId();
+                setProgessLoading(R.id.news_list, View.GONE);
+                setProgessLoading(R.id.progress_search, View.VISIBLE);
+                controller.setCountry(country);
+                controller.requestNews();
+                settings_dialog.dismiss();
+                settings_dialog = null;
+            }
+        });
+
+        Button cancel_btn = settings_dialog.findViewById(R.id.cancel_settings);
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settings_dialog.dismiss();
+                settings_dialog = null;
+            }
+        });
+        settings_dialog.show();
+    }
     @Override
     public AppController getController() {
         return controller;

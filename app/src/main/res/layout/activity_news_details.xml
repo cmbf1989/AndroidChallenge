@@ -89,7 +89,7 @@
                 <LinearLayout
                     android:id="@+id/image_container"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:background="#000000"
                     android:orientation="vertical">
@@ -97,10 +97,9 @@
                     <ImageView
                         android:id="@+id/image_new"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="130dp"
                         android:background="#000000"
                         android:contentDescription="@string/image_new"
-                        android:minHeight="150dp"
                         app:srcCompat="@drawable/ic_no_image" />
                 </LinearLayout>
 

@@ -15,14 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.frontkom.androidchallenge.Helpers.TimeConverter;
-import com.example.frontkom.androidchallenge.Interfaces.ListViewItem;
+import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.R;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private List<ListViewItem> values;
+    private List<IListViewItem> values;
     public Context context;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -44,15 +44,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public void addNewList(List<ListViewItem> values) {
+    public void addNewList(List<IListViewItem> values) {
         this.values = values;
     }
-    public void add(int position, ListViewItem item) {
+    public void add(int position, IListViewItem item) {
         values.add(position, item);
         notifyItemInserted(position);
     }
 
-    public ListViewItem getListItemAt(int position)
+    public IListViewItem getListItemAt(int position)
     {
         return values.get(position);
     }
@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerViewAdapter(List<ListViewItem> myDataset, Context context) {
+    public RecyclerViewAdapter(List<IListViewItem> myDataset, Context context) {
         values = myDataset;
         this.context = context;
     }
@@ -78,7 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    //  This method sets up the values for the recyclerview item. Uses picasso to lazy load the image from URL
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position

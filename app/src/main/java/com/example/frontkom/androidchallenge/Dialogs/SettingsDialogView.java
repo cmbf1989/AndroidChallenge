@@ -55,6 +55,9 @@ public class SettingsDialogView extends Dialog {
 
     }
 
+    /**
+     * Shows dialog with
+     */
     public void showDialog() {
 
         Button save_btn = findViewById(R.id.save_settings);

@@ -23,6 +23,30 @@
         android:layout_margin="5dp"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/progress_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:indeterminate="true" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Loading..."
+                android:textSize="20sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/news_list"
             android:layout_width="match_parent"
