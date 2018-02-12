@@ -8,7 +8,8 @@ import com.example.frontkom.androidchallenge.Factories.Factory;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 
 /**
- * Created by Cesar Ferreira on 07/02/2018.
+ * Created by Cesar Ferreira on 07/02/2018. Abstract super class that holds some methods to be implemented and a factory variable
+ * Also implements IObserver interface
  */
 
 public abstract class AppView  extends AppCompatActivity implements IObserver {

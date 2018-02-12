@@ -2,6 +2,8 @@ package com.example.frontkom.androidchallenge.Adapters;
 
 /**
  * Created by Cesar Ferreira on 08/02/2018.
+ * Recycler view adapter that is responsible for holding every item in the list with the desired
+ * proprieties
  */
 
 import java.util.List;

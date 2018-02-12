@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Cesar Ferreira on 10/02/2018.
+ * Class that converts time ina certain format to an uniform time format or time elapsed
  */
 
 public class TimeConverter {

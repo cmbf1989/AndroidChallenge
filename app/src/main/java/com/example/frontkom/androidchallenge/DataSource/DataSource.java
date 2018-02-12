@@ -4,6 +4,7 @@ import com.example.frontkom.androidchallenge.Factories.Factory;
 
 /**
  * Created by Cesar Ferreira on 09/02/2018.
+ * DataSource holds application information relative to some values that neeed presistance.
  */
 
 public class DataSource {
@@ -20,6 +21,7 @@ public class DataSource {
         if (mInstance == null) {
             mInstance = new DataSource();
         }
+
         return mInstance;
     }
 

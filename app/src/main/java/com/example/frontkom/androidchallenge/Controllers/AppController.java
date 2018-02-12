@@ -9,7 +9,8 @@ import com.example.frontkom.androidchallenge.Views.AppView;
 import java.util.ArrayList;
 
 /**
- * Created by Cesar Ferreira on 07/02/2018.
+ * Created by Cesar Ferreira on 07/02/2018. Main abstract controller class that all controllers extend.
+ * Holds some generic methods
  */
 
 public abstract class AppController {

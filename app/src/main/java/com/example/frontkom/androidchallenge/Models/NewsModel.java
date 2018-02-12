@@ -1,10 +1,7 @@
 package com.example.frontkom.androidchallenge.Models;
 
-import android.util.Log;
-
 import com.example.frontkom.androidchallenge.DataSource.DataSource;
-import com.example.frontkom.androidchallenge.Dialogs.SettingsDialogView;
-import com.example.frontkom.androidchallenge.Helpers.FileReaderJSON;
+import com.example.frontkom.androidchallenge.Helpers.FileReaderString;
 import com.example.frontkom.androidchallenge.Interfaces.IObserver;
 import com.example.frontkom.androidchallenge.Interfaces.IListViewItem;
 import com.example.frontkom.androidchallenge.Interfaces.NewsConnection;
@@ -88,7 +85,7 @@ public class NewsModel extends AppModel{
 
     public ConfigSettings getSettings(InputStream is) {
 
-        String config_settings = FileReaderJSON.getJSON(is, R.raw.datasource);
+        String config_settings = FileReaderString.getFileString(is, R.raw.datasource);
         Gson converter =  new Gson();
         ConfigSettings settings = converter.fromJson(config_settings, ConfigSettings.class);
 

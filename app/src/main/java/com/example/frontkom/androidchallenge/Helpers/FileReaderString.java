@@ -15,11 +15,12 @@ import java.io.Writer;
 
 /**
  * Created by Cesar Ferreira on 10/02/2018.
+ * Helper class for file reading
  */
 
-public class FileReaderJSON {
+public class FileReaderString {
 
-    public static String getJSON(InputStream is, int id)
+    public static String getFileString(InputStream is, int id)
     {
         //InputStream is = context.getResources().openRawResource(id);
         Writer writer = new StringWriter();
